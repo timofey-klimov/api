@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.Configuration
+namespace DAL.Configuration
 {
     public class LogEntryConfiguration : IEntityTypeConfiguration<LogEntry>
     {
@@ -14,6 +14,10 @@ namespace Domain.Configuration
                 .IsRequired();
             builder.Property(x => x.Request)
                 .HasMaxLength(1000)
+                .IsRequired();
+            builder.Property(x => x.CreateDate)
+                .HasColumnType("datetime2(3)")
+                .HasDefaultValueSql("getdate()")
                 .IsRequired();
             builder.Ignore(x => x.Events);
         }

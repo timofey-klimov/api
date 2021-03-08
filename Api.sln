@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{BF5A8790-BC64-4E49-B2FA-9CAD8DBB6B5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{BF5A8790-BC64-4E49-B2FA-9CAD8DBB6B5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{9DAE9DF1-588A-4E4C-9A68-733DE4235BC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{9DAE9DF1-588A-4E4C-9A68-733DE4235BC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{24E64A11-6C0B-4CBE-B52B-104B87778F23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{24E64A11-6C0B-4CBE-B52B-104B87778F23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{8F72E085-296F-4FDC-8BE4-AD98BDC25D7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj", "{8F72E085-296F-4FDC-8BE4-AD98BDC25D7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{30E549CF-A7AB-4032-A3D2-395D7DDA6B25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{30E549CF-A7AB-4032-A3D2-395D7DDA6B25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationSettings", "ApplicationSettings\ApplicationSettings.csproj", "{584F179C-E3A1-4BF3-9F39-E7AA59E40A06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{30E549CF-A7AB-4032-A3D2-395D7DDA6B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30E549CF-A7AB-4032-A3D2-395D7DDA6B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30E549CF-A7AB-4032-A3D2-395D7DDA6B25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{584F179C-E3A1-4BF3-9F39-E7AA59E40A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{584F179C-E3A1-4BF3-9F39-E7AA59E40A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{584F179C-E3A1-4BF3-9F39-E7AA59E40A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{584F179C-E3A1-4BF3-9F39-E7AA59E40A06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

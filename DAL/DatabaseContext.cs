@@ -5,13 +5,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace DAL
 {
     public class DatabaseContext : DbContext
     {
         private readonly IMediator _mediator;
         public DatabaseContext(DbContextOptions<DatabaseContext> opts, IMediator mediator)
-            :base(opts)
+            : base(opts)
         {
             _mediator = mediator;
         }
@@ -20,6 +20,12 @@ namespace Domain
         {
 
         }
+
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<LogEntry> LogEntries { get; set; }
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
