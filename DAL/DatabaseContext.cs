@@ -26,7 +26,6 @@ namespace DAL
         public DbSet<LogEntry> LogEntries { get; set; }
 
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("");
@@ -60,7 +59,7 @@ namespace DAL
 
             events
                 .ToList()
-                .ForEach(x => _mediator.Publish(x, cancellationToken));
+                .ForEach(async x => await _mediator.Publish(x, cancellationToken));
 
             return result;
         }

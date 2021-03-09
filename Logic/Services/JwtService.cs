@@ -2,12 +2,10 @@
 using Logic.Dto;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Logic.Services
 {
@@ -28,7 +26,7 @@ namespace Logic.Services
                 _settings.Audience,
                 new[] { new Claim("user", credentials.Id.ToString()) },
                 expires: DateTime.Now.AddHours(_settings.TimeToLiveInHours),
-                signingCredentials: new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
+                signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
                 );
             return handler.WriteToken(token);
         }
