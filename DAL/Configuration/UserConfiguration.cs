@@ -25,6 +25,9 @@ namespace DAL.Configuration
                 .IsRequired();
             builder.Property(x => x.UpdateDate)
                 .HasColumnType("datetime2(3)");
+            builder.HasOne(x => x.Session)
+                .WithMany(x => x.Users)
+                .HasForeignKey(x => x.SessionId);
         }
     }
 }

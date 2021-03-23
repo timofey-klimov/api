@@ -1,6 +1,8 @@
-﻿using Domain.Models;
+﻿using DAL.Exceptions;
+using Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +18,8 @@ namespace DAL
             _mediator = mediator;
         }
 
-        public DatabaseContext()
+        public DatabaseContext(DbContextOptions<DatabaseContext> opts)
+            :base(opts)
         {
 
         }
@@ -25,43 +28,47 @@ namespace DAL
 
         public DbSet<LogEntry> LogEntries { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("");
-        }
+        public DbSet<Session> Sessions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
         }
 
-        public new void SaveChanges()
+        public int SaveChanges()
         {
-            this.SaveChangesAsync()
-                .Wait();
+            return this.SaveChangesAsync()
+                    .GetAwaiter()
+                    .GetResult();
         }
 
-        public new async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var entities = this.ChangeTracker
-                .Entries()
-                .Cast<BaseNotifyEntity>();
+            try
+            {
+                var entities = this.ChangeTracker
+                    .Entries()
+                    .Cast<BaseNotifyEntity>();
 
-            var @events = entities
-                .SelectMany(x => x.Events);
+                var @events = entities
+                    .SelectMany(x => x.Events);
 
-            entities
-                .ToList()
-                .ForEach(x => x.ClearEvents());
+                entities
+                    .ToList()
+                    .ForEach(x => x.ClearEvents());
 
-            var result = await base.SaveChangesAsync();
+                var result = await base.SaveChangesAsync();
 
-            events
-                .ToList()
-                .ForEach(async x => await _mediator.Publish(x, cancellationToken));
+                events
+                    .ToList()
+                    .ForEach(async x => await _mediator.Publish(x, cancellationToken));
 
-            return result;
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw new DbSaveChangesException("Ошибка при сохранение данных");
+            }
         }
     }
 }

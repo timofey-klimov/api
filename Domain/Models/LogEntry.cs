@@ -13,6 +13,7 @@ namespace Domain.Models
         public string Response { get; private set; }
 
         private LogEntry()
+            :base()
         {
 
         }

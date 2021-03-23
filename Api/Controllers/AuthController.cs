@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Api.Dto.Request;
+using Api.Dto.Response;
+using Logic.Services.Base;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Api.Controllers
@@ -10,6 +10,34 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class AuthController : ApiController
     {
-        
+        private readonly IAuthorizationService _authService;
+        public AuthController(IMediator mediator, IAuthorizationService authorizationService)
+            :base(mediator)
+        {
+            _authService = authorizationService;
+        }
+
+        /// <summary>
+        /// Получение токена для существующего пользователя
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="UserNotFoundException"></exception>
+        /// Ошибки:
+        /// 9999 - глобальная
+        /// 100 - пользователя не существует
+        /// <returns></returns>
+        [HttpPost("login")]
+        public async Task<ApiResponse<string>> Login(LoginRequestDto request)
+        {
+            var token = await _authService.Login(new Logic.Dto.LoginRequestDto(request.Login, request.Password));
+            return Ok(token);
+        }
+
+        [HttpPost("register")]
+        public async Task<ApiResponse<string>> Register(RegisterRequestDto request)
+        {
+            var token = await _authService.Register(new Logic.Dto.RegisterRequestDto(request.Login, request.Password, request.Email));
+            return Ok(token);
+        }
     }
 }

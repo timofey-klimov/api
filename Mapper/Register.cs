@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.ErrorExceptions
+namespace Mapper
 {
-    public enum ErrorCode
+    public class Register
     {
         
     }
