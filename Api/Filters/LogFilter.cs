@@ -1,4 +1,5 @@
-﻿using Api.Model;
+﻿using Api.Dto.Response;
+using Api.Model;
 using DAL;
 using Domain.Exceptions.Base;
 using Domain.Models;
@@ -61,16 +62,16 @@ namespace Api.Filters
 
             if(exception is ExceptionBase exBase)
             {
-                response = JsonConvert.SerializeObject(exBase);
+                response = JsonConvert.SerializeObject(ApiResponse.Fail((int)exBase.Code, exBase.Message));
                 code = (int)exBase.Code;
             }
 
             else
             {
-                var globalException = new GlobalException("Global exception");
-                exception = globalException;
-                response = JsonConvert.SerializeObject(globalException);
-                code = (int)globalException.Code;
+                exception = new GlobalException("Global exception");
+                var ex = (ExceptionBase)exception;
+                response = JsonConvert.SerializeObject(ApiResponse.Fail((int)ex.Code, ex.Message));
+                code = (int)ex.Code;
             }
 
             Log(request, response, code, userId);
@@ -81,13 +82,18 @@ namespace Api.Filters
 
         private string GetRequestPathAndBody(HttpRequest request)
         {
+            ResetStream(request.Body);
+
             var path = request.Path;
             string body;
+
             using(var streamReader = new StreamReader(request.Body))
             {
                 body =  streamReader.ReadToEndAsync()
                     .GetAwaiter()
                     .GetResult();
+
+                ResetStream(request.Body);
             }
 
             return $"{path} {body}";
@@ -101,6 +107,11 @@ namespace Api.Filters
                 db.LogEntries.Add(log);
                 db.SaveChanges();
             }
+        }
+
+        private void ResetStream(Stream stream)
+        {
+            stream.Position = 0;
         }
     }
 }

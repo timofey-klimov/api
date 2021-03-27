@@ -27,7 +27,7 @@ namespace Api.Controllers
         /// 100 - пользователя не существует
         /// <returns></returns>
         [HttpPost("login")]
-        public async Task<ApiResponse<string>> Login(LoginRequestDto request)
+        public async Task<ApiResponse<string>> Login([FromBody] LoginRequestDto request)
         {
             var token = await _authService.Login(new Logic.Dto.LoginRequestDto(request.Login, request.Password));
             return Ok(token);
@@ -39,7 +39,7 @@ namespace Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("register")]
-        public async Task<ApiResponse<string>> Register(RegisterRequestDto request)
+        public async Task<ApiResponse<string>> Register([FromBody] RegisterRequestDto request)
         {
             var token = await _authService.Register(new Logic.Dto.RegisterRequestDto(request.Login, request.Password, request.Email));
             return Ok(token);

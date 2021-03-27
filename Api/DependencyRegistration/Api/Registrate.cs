@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using System;
-using System.IO;
-using System.Reflection;
+using System.Collections.Generic;
 
 namespace Api.DependencyRegistration.Api
 {
@@ -18,6 +16,30 @@ namespace Api.DependencyRegistration.Api
                     Version = "v1",
                     Title = "ToDo API",
                     Description = "A simple example ASP.NET Core Web API",
+                });
+                x.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme()
+                    {
+                        Description = "Jwt token",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey
+                    });
+                x.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                         new OpenApiSecurityScheme
+                         {
+                             Reference = new OpenApiReference()
+                             {
+                                 Type = ReferenceType.SecurityScheme,
+                                 Id = "Bearer"
+                             },
+                             Scheme = "oauth2",
+                             Name = "Bearer",
+                             In = ParameterLocation.Header
+                         },
+                         new List<string>()
+                    }
                 });
             });
 
