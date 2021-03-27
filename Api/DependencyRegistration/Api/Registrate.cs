@@ -22,7 +22,8 @@ namespace Api.DependencyRegistration.Api
                     {
                         Description = "Jwt token",
                         Name = "Authorization",
-                        Type = SecuritySchemeType.ApiKey
+                        Type = SecuritySchemeType.ApiKey,
+                        In = ParameterLocation.Header
                     });
                 x.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
@@ -34,8 +35,8 @@ namespace Api.DependencyRegistration.Api
                                  Type = ReferenceType.SecurityScheme,
                                  Id = "Bearer"
                              },
-                             Scheme = "oauth2",
-                             Name = "Bearer",
+                             Scheme = "Bearer",
+                             Name = "Jwt",
                              In = ParameterLocation.Header
                          },
                          new List<string>()

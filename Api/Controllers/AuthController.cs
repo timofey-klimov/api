@@ -1,5 +1,6 @@
 ﻿using Api.Dto.Request;
 using Api.Dto.Response;
+using Api.Filters;
 using Logic.Services.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
+    [AuthFilter]
     public class AuthController : ApiController
     {
         private readonly IAuthorizationService _authService;

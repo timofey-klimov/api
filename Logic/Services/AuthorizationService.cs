@@ -25,9 +25,9 @@ namespace Logic.Services
                 var user = await FindUser(request.Login, request.Password);
 
                 if (user == null)
-                    throw new UserNotFoundException("User was not found");
+                    throw new UserNotFoundException("Пользователь не найден");
 
-                return _jwtService.CreateToken(new CreateTokenDto(user.Id));
+                return _jwtService.CreateToken(new CreateTokenDto(user.Id)).Token;
             }
         }
 
@@ -35,16 +35,24 @@ namespace Logic.Services
         {
             using(var context = DbCreator())
             {
-                var user = FindUser(request.Login, request.Password);
+                var user = await FindUser(request.Login, request.Password);
                 if (user != null)
                     throw new UserAlreadyExists("Пользователь уже существует");
-                var newUser = new User(request.Login, request.Email, Sha256Hash.ComputeSha256Hash(request.Password));
+                var userToCreate = new User(request.Login, request.Email, Sha256Hash.ComputeSha256Hash(request.Password));
 
-                context.Users.Add(newUser);
+                context.Users.Add(userToCreate);
 
                 await context.SaveChangesAsync();
 
-                return _jwtService.CreateToken(new CreateTokenDto(user.Id));
+                var jwtTokenDto = _jwtService.CreateToken(new CreateTokenDto(userToCreate.Id));
+
+                var sesion = new Session(jwtTokenDto.Token, jwtTokenDto.CreateDate, jwtTokenDto.ExpireDate, userToCreate.Id);
+
+                context.Sessions.Add(sesion);
+
+                await context.SaveChangesAsync();
+
+                return jwtTokenDto.Token;
             }
         }
     }

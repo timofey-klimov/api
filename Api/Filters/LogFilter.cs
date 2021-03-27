@@ -4,6 +4,7 @@ using DAL;
 using Domain.Exceptions.Base;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using System;
@@ -31,7 +32,7 @@ namespace Api.Filters
                 HandleException(context.Exception, request, userId);
 
 
-            var response = GetResponseBody(context.HttpContext.Response);
+            var response = GetResponseBody(context.Result);
             HandleEvent(request, response, userId);
         }
 
@@ -45,14 +46,11 @@ namespace Api.Filters
             }
         }
 
-        private string GetResponseBody(HttpResponse httpResponse)
+        private string GetResponseBody(IActionResult result)
         {
-            using(var streamReader = new StreamReader(httpResponse.Body))
-            {
-                return streamReader.ReadToEndAsync()
-                    .GetAwaiter()
-                    .GetResult();
-            }
+            var body = ((ObjectResult)result).Value;
+
+            return JsonConvert.SerializeObject(body);
         }
 
         private void HandleException(Exception exception, string request, int? userId)

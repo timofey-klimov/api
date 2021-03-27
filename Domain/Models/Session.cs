@@ -12,12 +12,20 @@ namespace Domain.Models
 
         public DateTime ExpireDate { get; private set; }
 
-        public virtual ICollection<User> Users { get; private set; }
-        
+        public int UserId { get; private set; }
+
         private Session()
             :base()
         {
 
+        }
+
+        public Session(string token, DateTime createDate, DateTime expireDate, int userId)
+        {
+            Token = token;
+            CreateDate = createDate;
+            ExpireDate = expireDate;
+            UserId = userId;
         }
     }
 }

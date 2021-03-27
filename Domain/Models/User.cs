@@ -14,10 +14,6 @@ namespace Domain.Models
 
         public byte[] Password { get; private set; }
 
-        public int? SessionId { get; private set; }
-
-        public virtual Session Session { get; set; }
-
         private User()
             :base()
         {

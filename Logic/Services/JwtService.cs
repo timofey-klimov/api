@@ -17,7 +17,7 @@ namespace Logic.Services
             _settings = settings;
         }
 
-        public string CreateToken(CreateTokenDto credentials)
+        public JwtTokenDto CreateToken(CreateTokenDto credentials)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));
             var handler = new JwtSecurityTokenHandler();
@@ -25,10 +25,12 @@ namespace Logic.Services
                 _settings.Issuer,
                 _settings.Audience,
                 new[] { new Claim("user", credentials.Id.ToString()) },
-                expires: DateTime.Now.AddHours(_settings.TimeToLiveInHours),
+                expires: GetExpireDate(_settings.TimeToLiveInHours),
                 signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
                 );
-            return handler.WriteToken(token);
+            var jwtToken = handler.WriteToken(token);
+
+            return new JwtTokenDto(DateTime.Now, GetExpireDate(_settings.TimeToLiveInHours), jwtToken);
         }
 
         public bool ValidateToken(ValidateTokenDto tokenDto, out int? userId)
@@ -62,6 +64,11 @@ namespace Logic.Services
             }
 
             return false;
+        }
+
+        private DateTime GetExpireDate(int timeToLive)
+        {
+            return DateTime.Now.AddHours(timeToLive);
         }
     }
 }
