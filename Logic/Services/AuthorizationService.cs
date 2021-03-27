@@ -22,7 +22,7 @@ namespace Logic.Services
         {
             using(var context = DbCreator())
             {
-                var user = FindUser(request.Login, request.Password);
+                var user = await FindUser(request.Login, request.Password);
 
                 if (user == null)
                     throw new UserNotFoundException("User was not found");

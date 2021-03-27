@@ -25,6 +25,7 @@ namespace Domain.Models
         }
 
         public User(string login, string email, byte[] password)
+            :base()
         {
             Login = login;
             Email = email;

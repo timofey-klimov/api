@@ -15,6 +15,7 @@ namespace Domain.Models
         public virtual ICollection<User> Users { get; private set; }
         
         private Session()
+            :base()
         {
 
         }

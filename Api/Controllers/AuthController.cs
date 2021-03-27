@@ -33,6 +33,11 @@ namespace Api.Controllers
             return Ok(token);
         }
 
+        /// <summary>
+        /// Регистрация нового пользователя
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<ApiResponse<string>> Register(RegisterRequestDto request)
         {

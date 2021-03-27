@@ -48,7 +48,9 @@ namespace DAL
             {
                 var entities = this.ChangeTracker
                     .Entries()
-                    .Cast<BaseNotifyEntity>();
+                    .Select(x => x.Entity)
+                    .Cast<BaseNotifyEntity>()
+                    .ToList();
 
                 var @events = entities
                     .SelectMany(x => x.Events);

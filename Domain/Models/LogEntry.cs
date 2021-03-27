@@ -8,7 +8,6 @@ namespace Domain.Models
         public int? UserId { get; private set; }
         public string Request { get; private set; }
         public DateTime CreateDate { get; private set; }
-
         public int Code { get; private set; }
         public string Response { get; private set; }
 
@@ -19,6 +18,7 @@ namespace Domain.Models
         }
 
         public LogEntry(int? userId, string request, string response, int code)
+            :base()
         {
             UserId = userId;
             Request = request;

@@ -1,5 +1,4 @@
 ﻿using Api.Dto.Response;
-using Logic.Services.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -31,7 +31,7 @@ namespace Logic.Services
             return handler.WriteToken(token);
         }
 
-        public bool ValidateTolen(ValidateTokenDto tokenDto, out int? userId)
+        public bool ValidateToken(ValidateTokenDto tokenDto, out int? userId)
         {
             userId = null;
             var handler = new JwtSecurityTokenHandler();
