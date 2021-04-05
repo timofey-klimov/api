@@ -40,6 +40,12 @@ namespace Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(x =>
+            {
+                x.AllowAnyOrigin();
+                x.AllowAnyHeader();
+            });
+
             app.Use((context, next) =>
             {
                 context.Request.EnableBuffering();
