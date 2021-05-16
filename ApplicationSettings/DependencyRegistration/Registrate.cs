@@ -12,6 +12,10 @@ namespace ApplicationSettings.DependencyRegistration
             configuration.GetSection(nameof(JwtSettings)).Bind(jwtSettings);
             services.AddSingleton(jwtSettings);
 
+            var mailClientSettings = configuration.GetSection("MailClientSettings").Get<MailClientSettings>();
+
+            services.AddSingleton(x => mailClientSettings);
+
             return services;
         }
     }

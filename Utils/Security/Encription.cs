@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Utils.Encription
 {
-    public static class Sha256Hash
+    public static class Encription
     {
         public static byte[] ComputeSha256Hash(string rawData)
         {

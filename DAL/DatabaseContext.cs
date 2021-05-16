@@ -16,6 +16,7 @@ namespace DAL
             : base(opts)
         {
             _mediator = mediator;
+            Database.Migrate();
         }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> opts)
@@ -29,6 +30,10 @@ namespace DAL
         public DbSet<LogEntry> LogEntries { get; set; }
 
         public DbSet<Session> Sessions { get; set; }
+
+        public DbSet<NotificationTemplate> NotificationTemplates { get; set; }
+
+        public DbSet<TwoFactorAuth> TwoFactorAuths { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

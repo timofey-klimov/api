@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace Api.Filters
 {
@@ -46,6 +45,11 @@ namespace Api.Filters
             }
         }
 
+        /// <summary>
+        /// Костыль ебаный, придумать как сделать по другому
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
         private string GetResponseBody(IActionResult result)
         {
             var body = ((ObjectResult)result).Value;

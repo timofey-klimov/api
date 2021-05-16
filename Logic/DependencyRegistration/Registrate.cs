@@ -1,4 +1,6 @@
-﻿using Logic.Services;
+﻿using Logic.Operations.Handlers;
+using Logic.Operations.Requests;
+using Logic.Services;
 using Logic.Services.Base;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +17,6 @@ namespace Logic.DependencyRegistration
 
             services.AddTransient<IAuthorizationService, AuthorizationService>();
             services.AddTransient<JwtService>();
-
             return services;
         }
     }

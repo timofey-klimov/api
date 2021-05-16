@@ -1,4 +1,6 @@
-﻿namespace Logic.Dto
+﻿using Utils.Guards;
+
+namespace Logic.Dto
 {
     public class ValidateTokenDto
     {
@@ -6,6 +8,8 @@
 
         public ValidateTokenDto(string token)
         {
+            Guard.GuardAgainstNull(token, nameof(token));
+
             Token = token;
         }
     }

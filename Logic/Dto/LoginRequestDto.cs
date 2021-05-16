@@ -1,4 +1,6 @@
-﻿namespace Logic.Dto
+﻿using Utils.Guards;
+
+namespace Logic.Dto
 {
     public class LoginRequestDto
     {
@@ -8,6 +10,9 @@
 
         public LoginRequestDto(string login, string password)
         {
+            Guard.GuardAgainstNull(login, nameof(login));
+            Guard.GuardAgainstNull(password, nameof(password));
+
             Login = login;
             Password = password;
         }

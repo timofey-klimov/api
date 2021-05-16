@@ -1,5 +1,6 @@
 ﻿using DAL;
 using Domain.Models;
+using Logic.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -19,7 +20,16 @@ namespace Logic.Services.Base
         {
             using(var context = DbCreator())
             {
-                var user = await context.Users.FirstOrDefaultAsync(x => x.Login == login && Sha256Hash.ComputeSha256Hash(password) == x.Password);
+                var user = await context.Users.FirstOrDefaultAsync(x => x.Login == login && Encription.ComputeSha256Hash(password) == x.Password);
+                return user;
+            }
+        }
+
+        public virtual async Task<User> FindUser(int id)
+        {
+            using(var context = DbCreator())
+            {
+                var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
                 return user;
             }
         }

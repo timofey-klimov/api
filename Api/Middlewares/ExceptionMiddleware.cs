@@ -22,6 +22,7 @@ namespace Api.Middlewares
             }
             catch(ExceptionBase ex)
             {
+                context.Response.ContentType = "application/json";
                 var response = ApiResponse.Fail((int)ex.Code, ex.Message);
                 var body = JsonConvert.SerializeObject(response);
                 await context.Response.WriteAsync(body);

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utils.Guards;
 
 namespace Logic.Dto
 {
@@ -18,6 +15,7 @@ namespace Logic.Dto
         {
             CreateDate = createDate;
             ExpireDate = expireDate;
+            Guard.GuardAgainstNull(token, nameof(token));
             Token = token;
         }
     }

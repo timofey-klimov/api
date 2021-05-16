@@ -13,9 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationSettings", "ApplicationSettings\ApplicationSettings.csproj", "{584F179C-E3A1-4BF3-9F39-E7AA59E40A06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{968AF314-8F30-41C9-B936-659A0B01A9F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "Utils\Utils.csproj", "{968AF314-8F30-41C9-B936-659A0B01A9F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInjection", "DependencyInjection\DependencyInjection.csproj", "{350CAF6E-90DF-4B03-861D-7A8904704497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection", "DependencyInjection\DependencyInjection.csproj", "{350CAF6E-90DF-4B03-861D-7A8904704497}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{57C5C39E-7D0C-4C2C-9F7A-F819D0316368}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{9E057E13-C7E6-4EAA-9621-E5C27784C30C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{350CAF6E-90DF-4B03-861D-7A8904704497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{350CAF6E-90DF-4B03-861D-7A8904704497}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{350CAF6E-90DF-4B03-861D-7A8904704497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57C5C39E-7D0C-4C2C-9F7A-F819D0316368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57C5C39E-7D0C-4C2C-9F7A-F819D0316368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57C5C39E-7D0C-4C2C-9F7A-F819D0316368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57C5C39E-7D0C-4C2C-9F7A-F819D0316368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E057E13-C7E6-4EAA-9621-E5C27784C30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E057E13-C7E6-4EAA-9621-E5C27784C30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E057E13-C7E6-4EAA-9621-E5C27784C30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E057E13-C7E6-4EAA-9621-E5C27784C30C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

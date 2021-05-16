@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ApplicationSettings\ApplicationSettings.csproj" />
     <ProjectReference Include="..\DAL\DAL.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Logic\Logic.csproj" />
   </ItemGroup>
 

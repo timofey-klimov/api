@@ -3,9 +3,9 @@ using Domain.Exceptions.ErrorCodes;
 
 namespace Logic.Exceptions
 {
-    public class UserAlreadyExists : ExceptionBase
+    public class UserAlreadyExistsException : ExceptionBase
     {
-        public UserAlreadyExists(string message)
+        public UserAlreadyExistsException(string message)
             :base(message)
         {
 

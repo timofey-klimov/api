@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Events;
+using System;
 
 namespace Domain.Models
 {
@@ -7,6 +8,8 @@ namespace Domain.Models
         public string Login { get; private set; }
 
         public string Email { get; private set; }
+
+        public string PhoneNumber { get; private set; }
 
         public DateTime CreateDate { get; private set; }
 
@@ -20,12 +23,14 @@ namespace Domain.Models
 
         }
 
-        public User(string login, string email, byte[] password)
+        public User(string login, string email, string phoneNumber,byte[] password)
             :base()
         {
             Login = login;
             Email = email;
             Password = password;
+            PhoneNumber = phoneNumber;
+            Events.Add(new UserWasCreatedEvent(Email));
         }
     }
 }

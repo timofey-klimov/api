@@ -39,9 +39,20 @@ namespace Api.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("register")]
-        public async Task<ApiResponse<string>> Register([FromBody] RegisterRequestDto request)
+        public async Task<ApiResponse<int>> Register([FromBody] RegisterRequestDto request)
         {
-            var token = await _authService.Register(new Logic.Dto.RegisterRequestDto(request.Login, request.Password, request.Email));
+            var userId = await _authService.Register(new Logic.Dto.RegisterRequestDto(request.Login, request.Password, request.Email, request.PhoneNumber));
+            return Ok(userId);
+        }
+
+        /// <summary>
+        /// Подтверждение email при регистрации
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("confirm")]
+        public async Task<ApiResponse<string>> ConfirmEmail([FromBody] ConfirmEmailRequestDto request)
+        {
+            var token = await _authService.ConfirmEmail(request.UserId, request.Code);
             return Ok(token);
         }
     }

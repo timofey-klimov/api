@@ -25,6 +25,8 @@ namespace DAL.Configuration
                 .IsRequired();
             builder.Property(x => x.UpdateDate)
                 .HasColumnType("datetime2(3)");
+            builder.Property(x => x.PhoneNumber)
+                .HasMaxLength(20);
         }
     }
 }
