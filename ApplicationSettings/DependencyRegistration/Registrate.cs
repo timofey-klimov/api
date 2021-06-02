@@ -16,6 +16,8 @@ namespace ApplicationSettings.DependencyRegistration
 
             services.AddSingleton(x => mailClientSettings);
 
+            services.Configure<ImageBaseFolderSettings>(configuration.GetSection(nameof(ImageBaseFolderSettings)));
+
             return services;
         }
     }

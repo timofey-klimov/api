@@ -10,7 +10,7 @@ namespace DAL.Configuration
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Response)
-                .HasMaxLength(300)
+                .HasMaxLength(1500)
                 .IsRequired();
             builder.Property(x => x.Request)
                 .HasMaxLength(1000)

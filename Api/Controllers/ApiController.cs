@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    public class ApiController : ControllerBase
+    public abstract class ApiController : ControllerBase
     {
         protected IMediator Mediatr;
-        public ApiController(IMediator mediator)
+        protected ApiController(IMediator mediator)
         {
             Mediatr = mediator;
         }

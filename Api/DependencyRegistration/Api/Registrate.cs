@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using System;
 using System.Collections.Generic;
 
 namespace Api.DependencyRegistration.Api
@@ -43,6 +45,16 @@ namespace Api.DependencyRegistration.Api
                     }
                 });
             });
+
+            var logPath = @$"C:\Users\timof\source\repos\api\Log\log-{DateTime.Now.Date.ToString("dd.MM.yyyy")}.txt";
+            var log = new LoggerConfiguration()
+                .WriteTo.File(logPath,
+                rollingInterval: RollingInterval.Day)
+                .WriteTo.Console()
+                .MinimumLevel.Debug()
+                .CreateLogger();
+
+            servces.AddScoped<ILogger>(x => log);
 
             return servces;
         }

@@ -21,5 +21,6 @@ namespace Domain.Models
             UserId = userId;
             Code = code;
         }
+
     }
 }

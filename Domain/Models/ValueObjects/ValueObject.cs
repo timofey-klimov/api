@@ -3,7 +3,6 @@
     public abstract class ValueObject<T>
         where T:ValueObject<T>
     {
-
         public override bool Equals(object obj)
         {
             var other = obj as T;
@@ -22,9 +21,9 @@
             return GetHashCodeCore();
         }
 
-        public abstract bool EqualsCore(T value);
+        protected abstract bool EqualsCore(T value);
 
-        public abstract int GetHashCodeCore();
+        protected abstract int GetHashCodeCore();
 
         public static bool operator ==(ValueObject<T> a, ValueObject<T> b)
         {

@@ -1,11 +1,13 @@
 ﻿using DAL;
 using Domain.Models;
+using Domain.Models.ValueObjects;
 using Logic.Dto;
 using Logic.Exceptions;
 using Logic.Operations.Requests;
 using Logic.Services.Base;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 using Utils.Encription;
@@ -16,8 +18,8 @@ namespace Logic.Services
     {
         private readonly JwtService _jwtService;
         private readonly IMediator _mediatr;
-        public AuthorizationService(JwtService jwtService, Func<DatabaseContext> dbCreator, IMediator mediator)
-            :base(dbCreator)
+        public AuthorizationService(JwtService jwtService, Func<DatabaseContext> dbCreator, IMediator mediator, ILogger logger)
+            :base(dbCreator, logger)
         {
             _jwtService = jwtService;
             _mediatr = mediator;
@@ -45,15 +47,12 @@ namespace Logic.Services
 
         public async Task<string> Login(LoginRequestDto request)
         {
-            using(var context = DbCreator())
-            {
-                var user = await FindUser(request.Login, request.Password);
+            var user = await FindUser(request.Login, request.Password);
 
-                if (user == null)
-                    throw new UserNotFoundException("Пользователь не найден");
+            if (user == null)
+                throw new EntityNotFoundException($"{typeof(User).Name} not found");
 
-                return _jwtService.CreateToken(new CreateTokenDto(user.Id)).Token;
-            }
+            return _jwtService.CreateToken(new CreateTokenDto(user.Id)).Token;
         }
 
         public async Task<int> Register(RegisterRequestDto request)
@@ -63,13 +62,13 @@ namespace Logic.Services
                 var user = await FindUser(request.Login, request.Password);
                 if (user != null)
                     throw new UserAlreadyExistsException("Пользователь уже существует");
-                var userToCreate = new User(request.Login, request.Email, request.PhoneNumber, Encription.ComputeSha256Hash(request.Password));
+                var userToCreate = new User(new Login(request.Login), new Email(request.Email), new PhoneNumber(request.PhoneNumber), new Domain.Models.ValueObjects.HashCode(Encription.ComputeSha256Hash(request.Password)));
 
                 context.Users.Add(userToCreate);
 
                 await context.SaveChangesAsync();
 
-                await _mediatr.Send(new SendConfirmCodeRequest(userToCreate.Email, userToCreate.Id));
+                await _mediatr.Send(new SendConfirmCodeRequest(userToCreate.Email.Value, userToCreate.Id));
 
                 return userToCreate.Id;
             }

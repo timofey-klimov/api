@@ -3,6 +3,7 @@ using Logic.Abstract;
 using Logic.Dto;
 using MailKit.Net.Smtp;
 using MimeKit;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 
@@ -11,8 +12,10 @@ namespace Infrastructure.MailClient
     public class MailSenderClient : IMailSenderClient
     {
         private readonly MailClientSettings _settings;
-        public MailSenderClient(MailClientSettings settings)
+        private readonly ILogger _logger;
+        public MailSenderClient(MailClientSettings settings, ILogger logger)
         {
+            _logger = logger;
             _settings = settings;
         }
         public async Task<OperationResult> SendMail(MailDto mailDto)
@@ -42,7 +45,8 @@ namespace Infrastructure.MailClient
             }
             catch(Exception ex)
             {
-                return OperationResult.Fail(ex.Message);
+                _logger.Error(ex.Message);
+                return OperationResult.Fail("MailSenderClient failed");
             }
         }
     }

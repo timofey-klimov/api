@@ -3,9 +3,9 @@ using Domain.Exceptions.ErrorCodes;
 
 namespace Logic.Exceptions
 {
-    public class OperatinFailedException : ExceptionBase
+    public class OperationFailedException : ExceptionBase
     {
-        public OperatinFailedException(string message)
+        public OperationFailedException(string message)
             :base(message)
         {
 

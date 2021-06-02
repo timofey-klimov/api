@@ -3,33 +3,38 @@ using Logic.Abstract;
 using Logic.Dto;
 using Logic.Enums;
 using Logic.Exceptions;
+using Logic.Operations.Base;
 using Logic.Operations.Requests;
 using MediatR;
+using Serilog;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Utils;
+using Utils.Extensions;
 
 namespace Logic.Operations.Handlers
 {
-    public class SendConfirmCodeHandler : IRequestHandler<SendConfirmCodeRequest>
+    public class SendConfirmCodeRequestHandler : OperationBase<SendConfirmCodeRequest, Unit>
     {
         private readonly IMailSenderClient _mailClient;
         private readonly Func<DatabaseContext> _dbCreator;
-        public SendConfirmCodeHandler(IMailSenderClient mailClient, Func<DatabaseContext> dbCreator)
+        public SendConfirmCodeRequestHandler(IMailSenderClient mailClient, Func<DatabaseContext> dbCreator, ILogger logger)
+            :base(dbCreator, logger)
         {
             _mailClient = mailClient;
             _dbCreator = dbCreator;
         }
-        public async Task<Unit> Handle(SendConfirmCodeRequest request, CancellationToken cancellationToken)
+
+        protected override async Task<Unit> HandleCore(SendConfirmCodeRequest request, CancellationToken token)
         {
             using (var dbContext = _dbCreator())
             {
-                var template = dbContext.NotificationTemplates.FirstOrDefault(x => x.NotificationType == (byte)NotificatonTemplate.ConfirmSmsCode);
+                var template = dbContext.NotificationTemplates.FirstOrDefault(x => x.NotificationType == NotificatonTemplate.ConfirmSmsCode.To<byte>());
 
                 if (template == null)
-                    throw new NotificationTemplateNotFoundException("NotificationTempateWasNotFound");
+                    throw new EntityNotFoundException($"{typeof(NotificatonTemplate)} not found");
 
                 var code = Generators.GenerateRandomCode(6);
                 var message = template.NotificationMessage.Replace("{code}", code);
@@ -38,13 +43,12 @@ namespace Logic.Operations.Handlers
 
                 await dbContext.SaveChangesAsync();
 
-                var mailDto = new MailDto("Код подтверждения", message, request.Email);
+                var mailDto = new MailDto("MyService", message, request.Email);
 
                 var result = await _mailClient.SendMail(mailDto);
 
-                if (!result.Succsess)
-                    throw new OperatinFailedException(result.ErrorMessage);
-
+                if (!result.IsSuccess)
+                    throw new OperationFailedException(result.ErrorMessage);
             }
 
             return Unit.Value;

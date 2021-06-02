@@ -9,6 +9,9 @@ using System.Text;
 
 namespace Logic.Services
 {
+    /// <summary>
+    /// Сервис для создания и валидации jwt токенов
+    /// </summary>
     public class JwtService
     {
         private readonly JwtSettings _settings;

@@ -34,7 +34,7 @@ namespace Api.Filters
                 var user = db.Users.FirstOrDefault(x => x.Id == userId);
                 if (user == null)
                     throw new UnauthorizedException("User was not found");
-                var authUser = new AuthUser(user.Id, user.Login, user.Password, user.CreateDate);
+                var authUser = new AuthUser(user.Id, user.Login.Value, user.Password.Value, user.CreateDate);
                 context.HttpContext.User = authUser;
             }
 

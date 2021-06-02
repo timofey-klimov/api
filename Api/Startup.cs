@@ -1,8 +1,10 @@
-using Api.DependencyRegistration;
 using Api.DependencyRegistration.Api;
 using Api.Filters;
 using Api.Middlewares;
-using DependencyInjection;
+using ApplicationSettings.DependencyRegistration;
+using DAL.DependencyRegistration;
+using Infrastructure;
+using Logic.DependencyRegistration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -25,10 +27,13 @@ namespace Api
         {
             services.AddControllers(opt =>
             {
-                opt.Filters.Add(typeof(LogFilter));
+                opt.Filters.Add(typeof(LogEntryFilter));
             });
 
-            services.RegisterAll(_configuration)
+            services.LogicDependency(_configuration)
+                .DALDependency(_configuration)
+                .SettingsDependency(_configuration)
+                .InfrastructureDependency(_configuration)
                 .ApiDependecy(_configuration);
         }
 
@@ -59,6 +64,7 @@ namespace Api
 
             });
             app.UseRouting();
+            app.UseMiddleware<LogRequestMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>

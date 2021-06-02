@@ -1,0 +1,30 @@
+2021-05-26 20:32:35.705 +03:00 [INF] Get New request
+Path:/api/Auth/login
+Headers
+{
+Content-Type:
+User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+}
+Body:{"login":"test","password":"test"}
+
+2021-05-26 20:35:43.390 +03:00 [INF] Get New request
+Path:/api/Image/add-image
+Headers
+{
+Content-Type:multipart/form-data
+User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+}
+Body:
+
+2021-05-26 22:01:28.215 +03:00 [INF] Get New request
+Path:/api/Image/add-image
+Headers
+{
+Content-Type:multipart/form-data
+User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+}
+Body:
+
+2021-05-26 22:02:03.760 +03:00 [ERR] Error in operation AddImageRequestHandler
+Index and length must refer to a location within the string. (Parameter 'length')
+2021-05-26 22:02:09.324 +03:00 [ERR] AddImageRequestHandler failed

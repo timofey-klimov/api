@@ -1,17 +1,20 @@
 ﻿using DAL;
 using Domain.Models;
+using Domain.Models.ValueObjects;
 using Logic.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 using Utils.Encription;
 
 namespace Logic.Services.Base
 {
-    public abstract class UserServiceBase
+    public abstract class UserServiceBase : BaseService
     {
         protected Func<DatabaseContext> DbCreator;
-        public UserServiceBase(Func<DatabaseContext> dbCreator)
+        public UserServiceBase(Func<DatabaseContext> dbCreator, ILogger logger)
+            :base(logger)
         {
             DbCreator = dbCreator;
         }
@@ -20,7 +23,7 @@ namespace Logic.Services.Base
         {
             using(var context = DbCreator())
             {
-                var user = await context.Users.FirstOrDefaultAsync(x => x.Login == login && Encription.ComputeSha256Hash(password) == x.Password);
+                var user = await context.Users.FirstOrDefaultAsync(x => x.Login.Value == login && x.Password.Value == Encription.ComputeSha256Hash(password));
                 return user;
             }
         }

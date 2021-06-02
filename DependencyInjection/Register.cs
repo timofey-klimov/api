@@ -3,7 +3,6 @@ using Logic.DependencyRegistration;
 using ApplicationSettings.DependencyRegistration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 using Infrastructure;
 
 namespace DependencyInjection
@@ -15,7 +14,7 @@ namespace DependencyInjection
             services.LogicDependency(configuration)
                 .DALDependency(configuration)
                 .SettingsDependency(configuration)
-                .RegisterInfrastructure(configuration);
+                .InfrastructureDependency(configuration);
 
             return services;
         }

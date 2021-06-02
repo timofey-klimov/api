@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Models.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,24 +10,51 @@ namespace DAL.Configuration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Login)
-                .HasMaxLength(100)
-                .IsRequired();
-            builder.Property(x => x.Email)
-                .HasMaxLength(100)
-                .IsRequired();
-            builder.Property(x => x.Password)
-                .HasColumnType("varbinary(max)")
-                .IsRequired();
+
+            builder.OwnsOne(x => x.Login, a =>
+            {
+                a.Property(u => u.Value)
+                    .HasColumnName("Login")
+                    .HasColumnType("nvarchar(100)")
+                    .IsRequired();
+            });
+
+            builder.OwnsOne(x => x.Email, a =>
+            {
+                a.Property(u => u.Value)
+                    .HasColumnName("Login")
+                    .HasColumnType("nvarchar(100)")
+                    .IsRequired();
+            });
+
+            builder.OwnsOne(x => x.Password, a =>
+            {
+                a.Property(u => u.Value)
+                    .HasColumnName("Password")
+                    .HasColumnType("varbinary(max)")
+                    .IsRequired();
+            });
+
+            builder.OwnsOne(x => x.PhoneNumber, a =>
+            {
+                a.Property(u => u.Value)
+                    .HasColumnName("PhoneNumber")
+                    .HasColumnType("nvarchar(20)");
+            });
+
             builder.Ignore(x => x.Events);
+
             builder.Property(x => x.CreateDate)
                 .HasColumnType("datetime2(3)")
                 .HasDefaultValueSql("getdate()")
                 .IsRequired();
+
             builder.Property(x => x.UpdateDate)
                 .HasColumnType("datetime2(3)");
-            builder.Property(x => x.PhoneNumber)
-                .HasMaxLength(20);
+
+            builder.HasMany(x => x.Files)
+                .WithOne(x => x.User)
+                .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

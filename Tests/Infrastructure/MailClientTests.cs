@@ -1,5 +1,7 @@
 ﻿using ApplicationSettings.Settings;
 using Infrastructure.MailClient;
+using Logic.Dto;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace Tests.Infrastructure
     public class MailClientTests
     {
         private MailClientSettings _settings;
+        private Mock<Serilog.ILogger> _logger;
 
         [SetUp]
         public void Setup()
@@ -25,16 +28,17 @@ namespace Tests.Infrastructure
                 Port = 465,
                 SenderName = "Сервис"
             };
+            _logger = new Mock<Serilog.ILogger>();
         }
 
         [Test]
         public void SendEmail()
         {
-            var mailClient = new MailSenderClient(_settings);
-            var result = mailClient.SendMail(new Logic.Dto.MailDto("hi", "<div>1111</div>", "timofey.klimov@inbox.ru")).Result;
+            var mailClient = new MailSenderClient(_settings, _logger.Object);
+            var result = mailClient.SendMail(new MailDto("hi", "<div>1111</div>", "timofey.klimov@inbox.ru")).Result;
 
 
-            Assert.AreEqual(true, result.Succsess);
+            Assert.AreEqual(true, result.IsSuccess);
         }
     }
 }
